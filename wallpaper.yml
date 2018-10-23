@@ -1,0 +1,19 @@
+---
+- hosts: windows
+  tasks:         
+    - name: Copy file 
+      win_copy: 
+       src=/home/ansible/ravenwall.png 
+       dest=c:\\Temp\\ravenwall.png
+    
+    - name: Set Wallpaper
+      win_regedit:
+       path: '{{ item.path }}'
+       name: '{{ item.name }}'
+       type: '{{ item.type }}'
+       data: '{{ item.data }}'
+      with_items:
+      - path: HKCU:\Control Panel\Desktop
+        name: Wallpaper
+        data: 'c:\Temp\ravenwall.png'
+        type: string
